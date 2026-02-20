@@ -46,8 +46,8 @@ window.addEventListener('load', () => {
 
 // Lightbox
 let visibleItems = [];
-function openLb(i) {
-    const clickedItem = bItems[i];
+function openLb(clickedItem) {
+    // const clickedItem = bItems[i]; // No longer needed as we pass 'this'
     const category = clickedItem.getAttribute('data-category');
     const onBtn = document.querySelector('.fbtn.on');
     const currentFilter = onBtn ? onBtn.getAttribute('data-filter') : 'all';
