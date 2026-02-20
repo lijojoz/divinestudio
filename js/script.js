@@ -76,8 +76,52 @@ function lbNav(d) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowLeft') lbNav(-1); if (e.key === 'ArrowRight') lbNav(1); });
 document.getElementById('lb').addEventListener('click', function (e) { if (e.target === this) closeLb(); });
 
-// Form submit
-document.querySelector('.sub-btn').addEventListener('click', function () {
-    this.textContent = 'Message Sent ✓'; this.style.background = '#2D5A3D';
-    setTimeout(() => { this.textContent = 'Send Message →'; this.style.background = 'var(--gold)'; }, 3000);
-});
+// Google Sheets Integration
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const originalText = btn.textContent;
+
+        // Visual feedback: Sending...
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        // Replace with your Google Apps Script Web App URL
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwlO2xenyiQSiEwWn6R9aceJEQIl5MqIeajSjbsCEJjCgS5KUc3PZSn2RyvtTFJ3eErkA/exec';
+
+        try {
+            if (!SCRIPT_URL || SCRIPT_URL.includes('YOUR_APPS_SCRIPT_URL_HERE')) {
+                throw new Error('Please set your Google Apps Script URL in js/script.js');
+            }
+
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Apps Script requires no-cors for simple posts
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            // Since mode is no-cors, we won't get a proper response body, 
+            // but we can assume success if no error was thrown.
+            btn.textContent = 'Message Sent ✓';
+            btn.style.background = '#2D5A3D';
+            this.reset();
+        } catch (error) {
+            console.error('Submission Error:', error);
+            btn.textContent = 'Error! Try Again';
+            btn.style.background = '#8B0000';
+            alert(error.message || 'There was an error sending your message. Please try again or contact us directly.');
+        } finally {
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.background = '';
+            }, 4000);
+        }
+    });
+}

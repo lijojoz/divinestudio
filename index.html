@@ -690,27 +690,31 @@
           </div>
         </div>
       </div>
-      <form class="c-form rr" onsubmit="return false;">
+      <form id="contactForm" class="c-form rr" onsubmit="return false;">
         <div class="f-row">
-          <div class="fg"><label>Your Name</label><input type="text" placeholder="Full Name" /></div>
-          <div class="fg"><label>Phone</label><input type="tel" placeholder="+91 98765 00000" /></div>
+          <div class="fg"><label for="userName">Your Name</label><input type="text" id="userName" name="name"
+              placeholder="Full Name" required /></div>
+          <div class="fg"><label for="userPhone">Phone</label><input type="tel" id="userPhone" name="phone"
+              placeholder="+91 98765 00000" required /></div>
         </div>
-        <div class="fg"><label>Email</label><input type="email" placeholder="you@email.com" /></div>
+        <div class="fg"><label for="userEmail">Email</label><input type="email" id="userEmail" name="email"
+            placeholder="you@email.com" required /></div>
         <div class="fg">
-          <label>Service Required</label>
-          <select>
+          <label for="userService">Service Required</label>
+          <select id="userService" name="service" required>
             <option value="">Select a service...</option>
-            <option>Wedding Photography</option>
-            <option>Pre-Wedding Shoot</option>
-            <option>Portrait Session</option>
-            <option>Event Coverage</option>
-            <option>Nature & Travel</option>
-            <option>Cinematic Videography</option>
+            <option value="Wedding Photography">Wedding Photography</option>
+            <option value="Pre-Wedding Shoot">Pre-Wedding Shoot</option>
+            <option value="Portrait Session">Portrait Session</option>
+            <option value="Event Coverage">Event Coverage</option>
+            <option value="Nature & Travel">Nature & Travel</option>
+            <option value="Cinematic Videography">Cinematic Videography</option>
           </select>
         </div>
-        <div class="fg"><label>Your Message</label><textarea placeholder="Tell us about your dream shoot..."></textarea>
+        <div class="fg"><label for="userMessage">Your Message</label><textarea id="userMessage" name="message"
+            placeholder="Tell us about your dream shoot..." required></textarea>
         </div>
-        <button class="sub-btn">Send Message →</button>
+        <button type="submit" id="submitBtn" class="sub-btn">Send Message →</button>
       </form>
     </div>
   </section>
